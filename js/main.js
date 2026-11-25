@@ -164,7 +164,7 @@
     gsap.utils.toArray('[data-deal]').forEach(function (group) {
       var cards = group.querySelectorAll('.postcard');
       gsap.fromTo(cards,
-        { y: 160, rotation: function (i) { return (i % 2 ? 1 : -1) * (6 + (i % 3) * 4); }, x: function (i) { return (i - (cards.length - 1) / 2) * -40; } },
+        { y: 160, rotation: function (i) { return (i % 2 ? 1 : -1) * (6 + (i % 3) * 4); }, x: function (i) { return window.innerWidth < 768 ? 0 : (i - (cards.length - 1) / 2) * -40; } },
         { y: 0, rotation: 0, x: 0, ease: 'none', stagger: 0.05,
           scrollTrigger: { trigger: group, start: 'top 95%', end: 'top 40%', scrub: 0.8 } });
     });

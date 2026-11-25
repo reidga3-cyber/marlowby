@@ -127,10 +127,11 @@ async function start() {
     x.font = '500 40px "Bodoni Moda"'; x.fillText('Marlowby Post', lx + 30, ly + 62);
     x.font = '500 20px "DM Mono"'; x.fillText('BOX NO. 01 · SAVANNAH, GA', lx + 30, ly + 100);
     for (let i = 0; i < 30; i++) x.fillRect(lx + 30 + i * 9, ly + 122, i % 3 ? 3 : 6, 52);   // barcode
-    // Gold text on the right
-    x.fillStyle = GOLD_LIGHT; x.font = '500 22px "DM Mono"';
-    spaced(x, 'LOCAL GOODS INSIDE', w * 0.74, h * 0.58, 5);
-    x.font = 'italic 500 34px "Bodoni Moda"'; x.textAlign = 'center'; x.fillText('Handle with care', w * 0.74, h * 0.72);
+    // Gold postmark on the right, clear of the ribbon (which sits near 76% across)
+    x.strokeStyle = GOLD_LIGHT; ring(x, w * 0.9, h * 0.62, 58, 3); ring(x, w * 0.9, h * 0.62, 46, 1.2);
+    x.fillStyle = GOLD_LIGHT; x.textAlign = 'center';
+    x.font = '500 30px "Bodoni Moda"'; x.fillText('No. 01', w * 0.9, h * 0.64);
+    x.font = '500 13px "DM Mono"'; x.fillText('SAVANNAH', w * 0.9, h * 0.705);
   });
 
   const sealTex = texture(256, 256, (x, w, h) => {
@@ -254,9 +255,9 @@ async function start() {
     const V = (x, y, z) => new Vector3(x, y, z);
     // start = packed inside the box; end = floating above it; rot = final tilt
     return [
-      { obj: jar(),    start: V(-0.62, 0.22, -0.28), end: V(-1.2, 1.85, 0.35),  rot: V(0.2, 0.8, -0.15), label: ['Peach & Vanilla Bean Preserves', 'Whitfield Pantry'] },
-      { obj: coffee(), start: V(0.12, 0.3, -0.32),   end: V(-0.05, 2.3, -0.2),  rot: V(0.1, -0.5, 0.12), label: ['Chicory Morning Blend', 'Forsyth Lane Roasters'] },
-      { obj: candle(), start: V(0.72, 0.15, 0.3),    end: V(1.15, 1.8, 0.4),    rot: V(0.35, 0.3, 0.18), label: ['Magnolia & Cedar Candle', 'Lantern & Lark'] },
+      { obj: jar(),    start: V(-0.62, 0.22, -0.28), end: V(-1.2, 1.6, 0.35),  rot: V(0.2, 0.8, -0.15), label: ['Peach & Vanilla Bean Preserves', 'Whitfield Pantry'] },
+      { obj: coffee(), start: V(0.12, 0.3, -0.32),   end: V(-0.05, 2.0, -0.2),  rot: V(0.1, -0.5, 0.12), label: ['Chicory Morning Blend', 'Forsyth Lane Roasters'] },
+      { obj: candle(), start: V(0.72, 0.15, 0.3),    end: V(1.15, 1.55, 0.4),    rot: V(0.35, 0.3, 0.18), label: ['Magnolia & Cedar Candle', 'Lantern & Lark'] },
       { obj: tin(),    start: V(-0.35, 0.11, 0.38),  end: V(-0.6, 1.3, 0.95),   rot: V(0.5, 0.9, 0.3) },
       { obj: print(),  start: V(0.3, 0.07, 0.15),    end: V(0.62, 1.3, 1.0),    rot: V(1.1, 0.2, -0.25) },
       { obj: ticket(), start: V(-0.1, 0.09, 0.0),    end: V(0.05, 1.05, 1.2),   rot: V(1.2, -0.4, 0.2) },
@@ -366,10 +367,10 @@ async function start() {
     camera.updateProjectionMatrix();
     const aspect = sw / sh;
     wide = sw >= 1024 && aspect > 1.1;
-    dist = wide ? 6.6 : 6.6 * Math.min(1.9, 1.25 / aspect);
+    dist = wide ? 6.6 : 6.6 * Math.min(2.3, 1.4 / aspect);  // pull back on tall screens so the box fits
     spread = wide ? 1 : Math.max(0.5, aspect * 0.75);     // pull floating items inward on phones
     offsetX = wide ? 1.35 : 0;                             // box sits right of the headline on desktop
-    lift = wide ? 0.3 : 1.55;                              // on phones, frame the box below the headline
+    lift = wide ? 0.3 : 2.9;                               // on phones, frame the box below the headline
   }
   layout();
   new ResizeObserver(layout).observe(stage);
@@ -476,7 +477,7 @@ async function start() {
     });
 
     // Labels follow their item on screen (3D position → 2D pixels)
-    const show = seg(p, 0.72, 0.84);
+    const show = wide ? seg(p, 0.72, 0.84) : 0;   // too crowded on phones, so desktop only
     callouts.forEach(({ it, el }) => {
       it.obj.getWorldPosition(tmp);
       tmp.y += 0.3;

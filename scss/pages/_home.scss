@@ -139,6 +139,7 @@
 
 // ---------- Featured cities ----------
 .cities-feature {
+  overflow: clip; // postcards fly in from off to the side
   &__head {
     display: flex;
     flex-wrap: wrap;
