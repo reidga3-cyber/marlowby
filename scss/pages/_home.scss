@@ -1,0 +1,272 @@
+// =============================================================
+// Homepage sections (below the hero)
+// =============================================================
+@use '../abstracts/mixins' as *;
+
+// ---------- Intro: what is Marlowby ----------
+.intro {
+  &__grid {
+    display: grid;
+    gap: var(--space-l);
+    @include up(lg) { grid-template-columns: 1.15fr 1fr; gap: var(--space-xl); align-items: end; }
+  }
+  &__body { display: grid; gap: var(--space-m); }
+  &__stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+    gap: var(--space-m);
+    margin-top: var(--space-xl);
+    padding-top: var(--space-l);
+    border-top: 1px solid var(--line);
+  }
+  &__stat {
+    display: grid;
+    gap: 0.35rem;
+    b { font-family: var(--font-display); font-size: var(--step-4); font-weight: 400; line-height: 1; color: var(--pine-800); font-variant-numeric: lining-nums; }
+    span { color: var(--ink-soft); font-size: var(--step--1); max-width: 20ch; }
+  }
+}
+
+// ---------- How it works: three steps on a dotted route ----------
+.steps-wrap { position: relative; }
+
+.steps {
+  position: relative;
+  display: grid;
+  gap: var(--space-l);
+  list-style: none;
+  counter-reset: step;
+  @include up(md) { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+  &__route {
+    display: none;
+    z-index: 0;
+    position: absolute;
+    left: 8%; right: 8%;
+    top: 4.4rem;
+    width: 84%;
+    height: 3rem;
+    @include up(md) { display: block; }
+    path { fill: none; stroke: var(--gold); stroke-width: 1.5; stroke-dasharray: 2 8; stroke-linecap: round; }
+  }
+
+  &__item {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    gap: var(--space-s);
+    justify-items: center;
+    text-align: center;
+    counter-increment: step;
+  }
+
+  &__icon {
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: 9rem;
+    height: 9rem;
+    border-radius: 50%;
+    background: var(--paper);
+    border: 1px solid var(--gold);
+    box-shadow: 0 0 0 8px var(--linen), 0 0 0 9px rgb(184 151 90 / 0.35);
+    svg { width: 4.6rem; height: 4.6rem; }
+
+    // The step number, stamped on like a postmark date
+    &::after {
+      content: '0' counter(step);
+      position: absolute;
+      top: -0.3rem;
+      right: -0.3rem;
+      display: grid;
+      place-items: center;
+      width: 2.4rem;
+      height: 2.4rem;
+      border-radius: 50%;
+      background: var(--pine-800);
+      color: var(--gold-light);
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+    }
+  }
+
+  &__item h3 { font-size: var(--step-2); }
+  &__item p { color: var(--ink-soft); max-width: 30ch; }
+}
+
+// Line-drawn illustrations share one style
+.line-art {
+  fill: none;
+  stroke: var(--pine-800);
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  .accent { stroke: var(--gold); }
+  .fill-gold { fill: var(--gold); stroke: none; }
+  .fill-paper { fill: var(--linen); }
+}
+
+// ---------- Box No. 01 band ----------
+.box-band {
+  overflow: hidden;
+  &__grid {
+    display: grid;
+    gap: var(--space-xl);
+    @include up(lg) { grid-template-columns: 1fr 1.1fr; align-items: center; }
+  }
+  &__intro { display: grid; gap: var(--space-m); justify-items: start; }
+
+  &__items {
+    list-style: none;
+    display: grid;
+    border-top: 1px solid var(--line-dark);
+  }
+  &__item {
+    display: grid;
+    grid-template-columns: 3rem 1fr auto;
+    gap: var(--space-s);
+    align-items: center;
+    padding-block: 1rem;
+    border-bottom: 1px solid var(--line-dark);
+
+    svg { width: 2.6rem; height: 2.6rem; }
+    b { display: block; font-family: var(--font-display); font-size: var(--step-1); font-weight: 400; line-height: 1.2; }
+    span { font-size: var(--step--1); color: var(--cream-soft); }
+    em { @include label; font-style: normal; font-size: 0.68rem; color: var(--gold-light); text-align: right; }
+  }
+  .line-art { stroke: var(--gold-light); .accent { stroke: var(--linen); } }
+}
+
+// ---------- Featured cities ----------
+.cities-feature {
+  &__head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: end;
+    justify-content: space-between;
+    gap: var(--space-m);
+    margin-bottom: var(--space-xl);
+    .section-head { margin: 0; }
+  }
+}
+
+// ---------- Makers ----------
+.maker-cards {
+  display: grid;
+  gap: var(--space-m);
+  @include up(md) { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+.maker-card {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  transition: transform 0.5s var(--ease-out), box-shadow 0.5s var(--ease-out);
+  &:hover { transform: translateY(-6px); box-shadow: var(--shadow-card); }
+
+  &__art {
+    position: relative;
+    aspect-ratio: 4 / 3;
+    background: linear-gradient(var(--maker-sky, #efe3cc), var(--paper));
+    border-bottom: 1px solid var(--line);
+    overflow: hidden;
+    svg { position: absolute; inset: auto 0 0; width: 100%; height: 88%; }
+  }
+
+  &__body { display: grid; gap: var(--space-xs); padding: var(--space-m); align-content: start; }
+  &__where { @include label; font-size: 0.7rem; color: var(--gold-ink); }
+  &__name { font-size: var(--step-2); }
+  &__quote { font-family: var(--font-display); font-style: italic; font-size: var(--step-1); line-height: 1.35; color: var(--ink); margin-block: var(--space-xs); }
+  &__product { font-size: var(--step--1); color: var(--ink-soft); }
+  &__body .link-arrow { margin-top: var(--space-xs); justify-self: start; font-size: var(--step--1); }
+}
+
+// ---------- Mission band ----------
+.mission {
+  position: relative;
+  overflow: hidden;
+  &__quote {
+    max-width: 22ch;
+    font-size: var(--step-4);
+    font-weight: 400;
+    line-height: 1.08;
+    em { font-style: italic; color: var(--gold-light); }
+  }
+  &__list {
+    list-style: none;
+    display: grid;
+    gap: var(--space-l);
+    margin-top: var(--space-xl);
+    @include up(md) { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  }
+  &__list li { display: grid; gap: var(--space-xs); padding-top: var(--space-m); border-top: 1px solid var(--line-dark); }
+  &__list b { font-family: var(--font-display); font-size: var(--step-3); font-weight: 400; color: var(--gold-light); line-height: 1; }
+  &__list span { color: var(--cream-soft); }
+  &__seal {
+    position: absolute;
+    right: -4rem;
+    top: 3rem;
+    width: clamp(12rem, 28vw, 22rem);
+    opacity: 0.18;
+    pointer-events: none;
+  }
+}
+
+// ---------- Plans teaser ----------
+.plan-teaser {
+  display: grid;
+  gap: var(--space-m);
+  @include up(md) { grid-template-columns: repeat(3, minmax(0, 1fr)); align-items: stretch; }
+
+  &__card {
+    position: relative;
+    display: grid;
+    gap: var(--space-s);
+    align-content: start;
+    padding: var(--space-l) var(--space-m);
+    background: var(--linen);
+    border: 1px solid var(--line);
+    text-align: center;
+    justify-items: center;
+  }
+  &__card--best {
+    background: var(--pine-800);
+    color: var(--linen);
+    border-color: var(--gold);
+    outline: 1px solid var(--gold);
+    outline-offset: -8px;
+    .plan-teaser__per { color: var(--cream-soft); }
+    .plan-teaser__name { color: var(--gold-light); }
+  }
+  &__flag {
+    position: absolute;
+    top: -0.8rem;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 0.3rem 0.9rem;
+    background: var(--gold-light);
+    color: var(--pine-950);
+    @include label;
+    font-size: 0.68rem;
+    white-space: nowrap;
+  }
+  &__name { @include label; color: var(--gold-ink); }
+  &__price { font-family: var(--font-display); font-size: var(--step-5); line-height: 1; font-weight: 400; font-variant-numeric: lining-nums;
+    sup { font-size: 0.4em; vertical-align: 0.9em; margin-right: 0.08em; }
+  }
+  &__per { color: var(--ink-soft); font-size: var(--step--1); }
+}
+.plan-teaser-foot { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--space-s); margin-top: var(--space-l); }
+
+// ---------- Final call to action ----------
+.final-cta {
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+  &__inner { display: grid; gap: var(--space-m); justify-items: center; position: relative; z-index: 1; }
+  &__actions { display: flex; flex-wrap: wrap; gap: var(--space-s); justify-content: center; }
+  &__route { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0.5;
+    path { fill: none; stroke: var(--gold); stroke-width: 1.2; stroke-dasharray: 2 9; stroke-linecap: round; }
+  }
+}

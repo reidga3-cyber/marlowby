@@ -1,0 +1,150 @@
+// =============================================================
+// City postcards — the signature graphic of the site.
+// Each postcard is an original SVG scene in two layers (far and
+// near). When you move the mouse over it, main.js writes --mx and
+// --my (-1 to 1); the card tilts in 3D and the layers shift at
+// different speeds, which reads as real depth.
+// =============================================================
+@use 'sass:map';
+@use '../abstracts/mixins' as *;
+
+// Each city's scene colors. Generated into classes like .postcard--savannah
+$city-scenes: (
+  savannah:  (sky1: #f5e3c3, sky2: #e6bf95, sun: #fff2d2, far: #93a67c, near: #2f4a36, accent: var(--city-savannah)),
+  detroit:   (sky1: #f1dcae, sky2: #ddb06a, sun: #fff3d6, far: #8c9fb3, near: #273246, accent: var(--city-detroit)),
+  asheville: (sky1: #e6ead9, sky2: #bfcfd3, sun: #f8e7b5, far: #8fa6b8, near: #3f5a72, accent: var(--city-asheville)),
+  tucson:    (sky1: #f9dfbf, sky2: #ecae86, sun: #fff1d0, far: #c98a6a, near: #4f5d3a, accent: var(--city-tucson)),
+  duluth:    (sky1: #dcebea, sky2: #b4d3d1, sun: #f7ebc8, far: #7faeb0, near: #24545b, accent: var(--city-duluth)),
+  santa-fe:  (sky1: #f7dcc0, sky2: #e8b49a, sun: #fff1d0, far: #b9798f, near: #6a3f5d, accent: var(--city-santa-fe)),
+);
+
+@each $city, $c in $city-scenes {
+  .postcard--#{$city} {
+    --sky1: #{map.get($c, sky1)};
+    --sky2: #{map.get($c, sky2)};
+    --sun: #{map.get($c, sun)};
+    --far: #{map.get($c, far)};
+    --near: #{map.get($c, near)};
+    --accent: #{map.get($c, accent)};
+  }
+}
+
+.postcard-grid {
+  display: grid;
+  gap: clamp(1rem, 2.5vw, 2rem);
+  grid-template-columns: 1fr;
+  @include up(sm) { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  @include up(lg) { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+.postcard {
+  --mx: 0;
+  --my: 0;
+  perspective: 1000px;
+
+  &__link {
+    position: relative;
+    display: block;
+    aspect-ratio: 3 / 2;
+    padding: 0.7rem;                      // the white postcard border
+    background: var(--linen);
+    color: #fff;
+    text-decoration: none;
+    box-shadow: calc(var(--mx) * -14px) calc(20px + var(--my) * -8px) 40px -20px rgb(15 31 24 / 0.55),
+                0 1px 2px rgb(15 31 24 / 0.12);
+    transform: rotateX(calc(var(--my) * -9deg)) rotateY(calc(var(--mx) * 11deg));
+    transition: transform 0.6s var(--ease-out), box-shadow 0.6s var(--ease-out);
+    will-change: transform;
+  }
+  &.is-tilting &__link { transition-duration: 0.12s; }
+
+  // The picture area, framed by a thin gold rule
+  &__art {
+    position: absolute;
+    inset: 0.7rem;
+    overflow: hidden;
+    background: linear-gradient(var(--sky1), var(--sky2));
+    outline: 1px solid rgb(184 151 90 / 0.7);
+    outline-offset: -5px;
+  }
+
+  &__layer {
+    position: absolute;
+    inset: -6%;
+    width: 112%;
+    height: 112%;
+  }
+  &__layer--far { transform: translate(calc(var(--mx) * -5px), calc(var(--my) * -3px)); }
+  &__layer--near { transform: translate(calc(var(--mx) * -14px), calc(var(--my) * -9px)); }
+
+  .sun { fill: var(--sun); }
+  .far { fill: var(--far); }
+  .near { fill: var(--near); }
+
+  // Gradient behind the text so it always reads clearly
+  &__art::after {
+    content: '';
+    position: absolute;
+    inset: 40% 0 0;
+    background: linear-gradient(transparent, rgb(10 20 15 / 0.55));
+  }
+
+  &__text {
+    position: absolute;
+    left: 1.6rem;
+    bottom: 1.3rem;
+    right: 1.6rem;
+    display: grid;
+    transform: translate(calc(var(--mx) * 8px), calc(var(--my) * 5px));
+    text-shadow: 0 1px 12px rgb(0 0 0 / 0.35);
+  }
+  &__kicker { @include label; font-size: 0.68rem; opacity: 0.92; }
+  &__city { font-size: clamp(1.7rem, 1.2rem + 1.6vw, 2.5rem); font-weight: 400; font-style: italic; line-height: 1.05; }
+  &__state { font-size: 0.85rem; opacity: 0.92; }
+
+  // Postage stamp with perforated edge (radial-gradient mask)
+  &__stamp {
+    position: absolute;
+    top: 1.3rem;
+    right: 1.3rem;
+    display: grid;
+    place-items: center;
+    width: 3.1rem;
+    aspect-ratio: 5 / 6;
+    padding: 4px;
+    background: var(--linen);
+    color: var(--accent);
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    transform: rotate(4deg) translate(calc(var(--mx) * 10px), calc(var(--my) * 6px));
+    // Perforated edge: a repeating pattern of tiny transparent circles
+    -webkit-mask-image: radial-gradient(circle 3px at 3px 3px, transparent 98%, #000);
+    -webkit-mask-position: -3px -3px;
+    -webkit-mask-size: 8px 8px;
+    mask-image: radial-gradient(circle 3px at 3px 3px, transparent 98%, #000);
+    mask-position: -3px -3px;
+    mask-size: 8px 8px;
+
+    span {
+      display: grid;
+      place-items: center;
+      width: 100%;
+      height: 100%;
+      border: 1.5px solid currentColor;
+    }
+  }
+
+  // Light glare that follows the cursor
+  &__glare {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: radial-gradient(circle at calc(50% + var(--mx) * 50%) calc(50% + var(--my) * 50%), rgb(255 255 255 / 0.4), transparent 55%);
+    mix-blend-mode: soft-light;
+    opacity: 0;
+    transition: opacity 0.4s;
+  }
+  &:hover &__glare { opacity: 1; }
+
+  &__link:focus-visible { outline: 2px solid var(--gold); outline-offset: 6px; }
+}

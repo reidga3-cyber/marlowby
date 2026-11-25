@@ -1,0 +1,26 @@
+// =============================================================
+// Marlowby — main stylesheet
+// Compiled by Sass into css/main.css (run: npm run css)
+//
+// Order matters: tokens first, then base styles, then layout,
+// then reusable components, then page-specific styles.
+// =============================================================
+
+@use 'base/fonts';
+@use 'base/tokens';
+@use 'base/base';
+@use 'layout/layout';
+
+@use 'components/buttons';
+@use 'components/header';
+@use 'components/footer';
+@use 'components/search';
+@use 'components/postcard';
+@use 'components/hero';
+
+@use 'pages/home';
+
+// Lenis smooth-scroll helper rules (from the Lenis docs)
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-stopped { overflow: hidden; }

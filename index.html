@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Marlowby | Explore Your City, One Box at a Time</title>
+  <meta name="description" content="Marlowby is a monthly subscription box of local goods, small-business products, and cultural experiences from a different U.S. city. Launching spring 2027.">
+  <meta name="theme-color" content="#163027">
+  <meta property="og:title" content="Marlowby | Explore Your City, One Box at a Time">
+  <meta property="og:description" content="A curated box of local goods and experiences from a different U.S. city every month.">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+  <!-- Load the headline font early so the big title appears in Bodoni right away -->
+  <link rel="preload" href="fonts/bodoni-moda-latin-opsz-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="css/main.css">
+  <!-- Tiny feature check before anything draws: swaps "no-js" for "js" and notes
+       reduced-motion and WebGL support, so the CSS can choose the right hero. -->
+  <script>
+    (function (d) {
+      var c = d.documentElement; c.classList.remove('no-js'); c.classList.add('js');
+      try {
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) c.classList.add('reduced');
+        var t = d.createElement('canvas');
+        if (t.getContext('webgl2') || t.getContext('webgl')) c.classList.add('webgl');
+      } catch (e) {}
+    })(document);
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+
+  <!-- Reusable storefront drawing for the maker cards (colors come from CSS variables) -->
+  <svg width="0" height="0" class="sr-only" aria-hidden="true" focusable="false">
+    <symbol id="storefront" viewBox="0 0 320 240">
+      <rect x="0" y="216" width="320" height="24" style="fill: var(--walk, #dccfb6)"/>
+      <rect x="40" y="24" width="240" height="192" style="fill: var(--wall)"/>
+      <rect x="32" y="16" width="256" height="12" style="fill: var(--trim)"/>
+      <rect x="76" y="38" width="44" height="26" style="fill: var(--glass, #c7d6d2)"/>
+      <rect x="200" y="38" width="44" height="26" style="fill: var(--glass, #c7d6d2)"/>
+      <rect x="72" y="64" width="52" height="4" style="fill: var(--trim)"/>
+      <rect x="196" y="64" width="52" height="4" style="fill: var(--trim)"/>
+      <rect x="60" y="74" width="200" height="28" style="fill: var(--trim)"/>
+      <rect x="65" y="79" width="190" height="18" style="fill: none; stroke: #b8975a; stroke-width: 1"/>
+      <path d="M52 110H268L284 142H36Z" style="fill: var(--awning)"/>
+      <path d="M52 110H79L67 142H36Z M106 110H133L129 142H98Z M160 110H187L191 142H160Z M214 110H241L253 142H222Z" style="fill: var(--awning2, #f6efe1)"/>
+      <path d="M36 142a15.5 9 0 0 0 31 0a15.5 9 0 0 0 31 0a15.5 9 0 0 0 31 0a15.5 9 0 0 0 31 0a15.5 9 0 0 0 31 0a15.5 9 0 0 0 31 0a15.5 9 0 0 0 31 0a15.5 9 0 0 0 31 0Z" style="fill: var(--awning)"/>
+      <rect x="62" y="158" width="116" height="56" style="fill: var(--glass, #c7d6d2); stroke: var(--trim); stroke-width: 4"/>
+      <rect x="78" y="190" width="16" height="22" rx="3" style="fill: var(--goods, #b8975a)"/>
+      <rect x="100" y="182" width="18" height="30" rx="3" style="fill: var(--trim)"/>
+      <rect x="124" y="192" width="14" height="20" rx="3" style="fill: var(--goods, #b8975a)"/>
+      <rect x="144" y="186" width="20" height="26" rx="3" style="fill: var(--trim); opacity: 0.7"/>
+      <rect x="196" y="152" width="54" height="64" style="fill: var(--trim)"/>
+      <rect x="204" y="160" width="38" height="28" style="fill: var(--glass, #c7d6d2)"/>
+      <circle cx="242" cy="194" r="2.5" style="fill: #d9bc80"/>
+    </symbol>
+  </svg>
+
+  <!-- ============ HEADER (same on every page) ============ -->
+  <header class="site-header">
+    <div class="container site-header__inner">
+      <a class="brand" href="index.html" aria-label="Marlowby home">
+        <svg class="brand__seal" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="19.5" fill="#d9bc80"/><circle cx="20" cy="20" r="17" fill="none" stroke="#163027" stroke-width="1" stroke-dasharray="1 2"/><circle cx="20" cy="20" r="14.5" fill="#163027"/><path d="M13 26.5V13.5l7 8.5 7-8.5v13" fill="none" stroke="#d9bc80" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/></svg>
+        <span class="brand__word">Marlowby</span>
+      </a>
+      <nav id="site-nav" class="site-nav" aria-label="Main">
+        <ul class="site-nav__list">
+          <li><a href="how-it-works.html">How It Works</a></li>
+          <li><a href="box.html">This Month</a></li>
+          <li><a href="cities.html">Cities</a></li>
+          <li><a href="makers.html">Makers</a></li>
+          <li><a href="plans.html">Plans</a></li>
+          <li><a href="about.html">About</a></li>
+        </ul>
+        <div class="site-nav__cta"><a class="btn" href="subscribe.html"><span class="btn__label">Subscribe</span></a></div>
+      </nav>
+      <div class="site-header__actions">
+        <button class="search-open" type="button" aria-haspopup="dialog" aria-controls="search">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5"/></svg>
+          <span class="sr-only">Search the site</span><kbd aria-hidden="true">/</kbd>
+        </button>
+        <a class="btn btn--small" href="subscribe.html" data-magnetic><span class="btn__label">Subscribe</span></a>
+      </div>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+        <span class="nav-toggle__bars" aria-hidden="true"></span><span class="sr-only">Menu</span>
+      </button>
+    </div>
+  </header>
+
+  <main id="main">
+
+    <!-- ============ 1. HERO: the 3D Marlowby box ============ -->
+    <section class="hero" aria-labelledby="hero-title" data-hero>
+      <div class="hero__track" data-hero-track>
+        <div class="hero__stage">
+          <!-- Decorative depth layers; each data-depth value moves at its own speed -->
+          <div class="hero__layers" aria-hidden="true">
+            <div class="hero__cone" data-depth="0.15"></div>
+            <div class="hero__numeral" data-depth="0.6">01</div>
+            <div class="hero__frame" data-depth="0.04"></div>
+            <div class="hero__coords" data-depth="0.25">32.0809° N · 81.0912° W · Savannah</div>
+          </div>
+
+          <div class="container hero__grid">
+            <div class="hero__copy">
+              <p class="eyebrow">Launching spring 2027</p>
+              <h1 class="hero__title" id="hero-title">Explore your city, <em>one box</em> at a time.</h1>
+              <p class="lead">Every month, Marlowby sends a hand-packed box of goods, flavors, and experiences from the small businesses of a different American city.</p>
+              <div class="hero__actions">
+                <a class="btn" href="plans.html" data-magnetic><span class="btn__label">Choose your plan</span></a>
+                <a class="btn btn--ghost" href="box.html" data-magnetic><span class="btn__label">Peek inside Box No. 01</span></a>
+              </div>
+              <p class="hero__meta"><span>Free shipping</span><span>Skip or pause anytime</span><span>60% goes to makers</span></p>
+            </div>
+
+            <!-- Hand-drawn SVG box: shown until the 3D box loads, and always shown
+                 if JavaScript or WebGL is unavailable or reduced motion is on -->
+            <div class="hero__visual">
+              <svg class="hero__fallback" viewBox="0 0 400 320" role="img" aria-labelledby="fallback-title">
+                <title id="fallback-title">A forest-green Marlowby box tied with a gold ribbon and a red wax seal, with city postcards floating above it</title>
+                <defs>
+                  <linearGradient id="fb-top" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#36614c"/><stop offset="1" stop-color="#1f3a2e"/></linearGradient>
+                  <linearGradient id="fb-left" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1a3328"/><stop offset="1" stop-color="#11241b"/></linearGradient>
+                  <linearGradient id="fb-right" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#244536"/><stop offset="1" stop-color="#183026"/></linearGradient>
+                  <radialGradient id="fb-shadow"><stop offset="0" stop-color="#000" stop-opacity="0.5"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>
+                </defs>
+                <ellipse cx="200" cy="278" rx="175" ry="30" fill="url(#fb-shadow)"/>
+                <!-- floating postcards -->
+                <g transform="rotate(-10 70 40)"><rect x="22" y="12" width="92" height="62" fill="#fbf7ee"/><rect x="27" y="17" width="82" height="52" fill="#e9c39a"/><path d="M27 52q20-10 41-4t41-2v23H27Z" fill="#2f4a36"/><circle cx="92" cy="30" r="6" fill="#fff2d2"/></g>
+                <g transform="rotate(8 330 36)"><rect x="286" y="8" width="92" height="62" fill="#fbf7ee"/><rect x="291" y="13" width="82" height="52" fill="#b4d3d1"/><path d="M291 46q20-8 41-3t41-1v23h-82Z" fill="#24545b"/><path d="M302 44V26h4v18M354 44V26h4v18M300 24h60v3h-60Z" fill="#24545b"/></g>
+                <!-- body -->
+                <path d="M60 128 200 178v92L60 220Z" fill="url(#fb-left)" stroke="#b8975a" stroke-width="0.8"/>
+                <path d="M200 178 340 128v92l-140 50Z" fill="url(#fb-right)" stroke="#b8975a" stroke-width="0.8"/>
+                <!-- lid -->
+                <path d="M60 110 200 160v18L60 128Z" fill="#1c372b" stroke="#b8975a" stroke-width="0.8"/>
+                <path d="M200 160 340 110v18l-140 50Z" fill="#264a3a" stroke="#b8975a" stroke-width="0.8"/>
+                <path d="M200 60 340 110 200 160 60 110Z" fill="url(#fb-top)" stroke="#b8975a" stroke-width="0.8"/>
+                <path d="M200 72 316 112 200 152 84 112Z" fill="none" stroke="#b8975a" stroke-width="0.6" opacity="0.6"/>
+                <!-- ribbon -->
+                <path d="M277 87.5 291 92.5 151 142.5 137 137.5Z" fill="#c9a462"/>
+                <path d="M137 137.5 151 142.5v110l-14-5Z" fill="#a8873f"/>
+                <!-- kraft shipping label -->
+                <path d="M228 195.6 312 165.6V207l-84 30Z" fill="#e6d3ad"/>
+                <path d="M239 208 301 188.6M239 220 301 200.6M239 228 280 213.5" stroke="#234536" stroke-width="2"/>
+                <!-- wax seal -->
+                <ellipse cx="186" cy="127" rx="17" ry="10" fill="#7a2622"/>
+                <ellipse cx="186" cy="125" rx="13" ry="7.5" fill="#8e2f2a" stroke="#c46a5c" stroke-width="0.8"/>
+                <path d="M180 128v-6l6 3.5 6-3.5v6" fill="none" stroke="#f0c9bc" stroke-width="1.2"/>
+              </svg>
+            </div>
+          </div>
+
+          <!-- These appear only while the 3D scene is running -->
+          <div class="hero__callouts" aria-hidden="true"></div>
+          <p class="hero__reveal" aria-hidden="true"><small>Inside Box No. 01 · Savannah, Georgia</small>Six finds from six local makers, plus a postcard from the city.</p>
+          <div class="hero__hint" aria-hidden="true">Scroll to open the box</div>
+          <div class="hero__progress" aria-hidden="true"><span></span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 2. WHAT IS MARLOWBY ============ -->
+    <section class="section band-paper intro" aria-labelledby="intro-title">
+      <div class="container">
+        <div class="intro__grid" data-reveal>
+          <div data-reveal-item>
+            <p class="eyebrow">What is Marlowby?</p>
+            <h2 class="title-l" id="intro-title">A different American city arrives at your door <em>every month</em>.</h2>
+          </div>
+          <div class="intro__body" data-reveal-item>
+            <p class="lead">Each Marlowby box is built around one city. We spend weeks there, meeting the bakers, roasters, potters, and storytellers who give the place its character, and we pack their best work into a single box.</p>
+            <p>Inside you'll find five to seven local goods, a cultural experience you can enjoy from home, and a postcard with the stories behind every maker. Explore a new city each month, or rediscover your own.</p>
+            <a class="link-arrow" href="how-it-works.html">See how Marlowby works</a>
+          </div>
+        </div>
+        <div class="intro__stats" data-reveal>
+          <p class="intro__stat" data-reveal-item><b>21</b><span>local makers featured so far</span></p>
+          <p class="intro__stat" data-reveal-item><b>4</b><span>pilot boxes shipped to 200 founding testers</span></p>
+          <p class="intro__stat" data-reveal-item><b>60%</b><span>of every box price goes straight to makers</span></p>
+          <p class="intro__stat" data-reveal-item><b>$34</b><span>per box with a 12-month plan</span></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 3. HOW IT WORKS (a real sequence, so numbers are meaningful) ============ -->
+    <section class="section band-linen" aria-labelledby="steps-title">
+      <div class="container">
+        <div class="section-head section-head--center" data-reveal>
+          <p class="eyebrow" data-reveal-item>How it works</p>
+          <h2 class="title-m" id="steps-title" data-reveal-item>Three steps from your mailbox to Main Street</h2>
+        </div>
+        <div class="steps-wrap">
+        <!-- Dotted route that draws itself between the steps -->
+        <svg class="steps__route" viewBox="0 0 1000 60" preserveAspectRatio="none" aria-hidden="true"><path data-draw d="M40 30 C 200 -10, 330 70, 500 30 S 800 -10, 960 30"/></svg>
+        <ol class="steps" data-reveal>
+          <li class="steps__item" data-reveal-item>
+            <div class="steps__icon"><svg class="line-art" viewBox="0 0 64 64" aria-hidden="true"><rect x="10" y="14" width="44" height="36" rx="2"/><path d="M10 24h44"/><path class="accent" d="M22 38l6 6 12-14"/><circle class="fill-gold" cx="46" cy="19" r="2"/></svg></div>
+            <h3>Pick a plan</h3>
+            <p>Go month to month, or prepay for three or twelve months and save up to 13%.</p>
+          </li>
+          <li class="steps__item" data-reveal-item>
+            <div class="steps__icon"><svg class="line-art" viewBox="0 0 64 64" aria-hidden="true"><path d="M32 10 54 20 32 30 10 20Z"/><path d="M10 20v24l22 10 22-10V20"/><path d="M32 30v24"/><path class="accent" d="M21 15l22 10v9"/></svg></div>
+            <h3>Get your city box</h3>
+            <p>Your box ships free in the first week of each month, packed with goods from one featured city.</p>
+          </li>
+          <li class="steps__item" data-reveal-item>
+            <div class="steps__icon"><svg class="line-art" viewBox="0 0 64 64" aria-hidden="true"><path d="M12 30v24h40V30"/><path class="accent" d="M8 30l6-12h36l6 12Z"/><path d="M8 30c0 4 3 6 6 6s6-2 6-6c0 4 3 6 6 6s6-2 6-6c0 4 3 6 6 6s6-2 6-6c0 4 3 6 6 6s6-2 6-6"/><rect x="18" y="40" width="10" height="14"/><rect x="34" y="40" width="12" height="8"/></svg></div>
+            <h3>Discover the makers</h3>
+            <p>Read their stories, try their work, and reorder favorites straight from the small businesses that made them.</p>
+          </li>
+        </ol>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 4. BOX No. 01 ============ -->
+    <section class="section band-dark box-band" aria-labelledby="box-title">
+      <div class="container box-band__grid">
+        <div class="box-band__intro" data-reveal>
+          <p class="eyebrow" data-reveal-item>Box No. 01 · Ships March 2027</p>
+          <h2 class="title-l" id="box-title" data-reveal-item>First stop: <em>Savannah, Georgia</em></h2>
+          <p class="lead" data-reveal-item>Live oaks, moss-draped squares, and a food scene built on Lowcountry tradition. Our first box brings you six Savannah makers, from a third-generation preserve kitchen to a historian who leads walking tours after dark.</p>
+          <a class="btn" href="box.html" data-magnetic data-reveal-item><span class="btn__label">Unbox it item by item</span></a>
+        </div>
+        <ul class="box-band__items" data-reveal>
+          <li class="box-band__item" data-reveal-item>
+            <svg class="line-art" viewBox="0 0 48 48" aria-hidden="true"><rect x="14" y="16" width="20" height="24" rx="4"/><rect class="accent" x="13" y="9" width="22" height="7" rx="1"/><path d="M14 25h20M14 33h20"/></svg>
+            <div><b>Peach &amp; Vanilla Bean Preserves</b><span>Whitfield Pantry</span></div><em>9 oz jar</em>
+          </li>
+          <li class="box-band__item" data-reveal-item>
+            <svg class="line-art" viewBox="0 0 48 48" aria-hidden="true"><path d="M14 13h20l3 28H11Z"/><path class="accent" d="M14 13l3-5h14l3 5"/><circle cx="24" cy="27" r="5"/></svg>
+            <div><b>Chicory Morning Blend Coffee</b><span>Forsyth Lane Roasters</span></div><em>12 oz bag</em>
+          </li>
+          <li class="box-band__item" data-reveal-item>
+            <svg class="line-art" viewBox="0 0 48 48" aria-hidden="true"><rect x="12" y="21" width="24" height="19" rx="2"/><path d="M12 27h24"/><path class="accent" d="M24 21v-5M24 7c-3 3-3 6 0 8 3-2 3-5 0-8Z"/></svg>
+            <div><b>Magnolia &amp; Cedar Candle</b><span>Lantern &amp; Lark</span></div><em>Hand-poured</em>
+          </li>
+          <li class="box-band__item" data-reveal-item>
+            <svg class="line-art" viewBox="0 0 48 48" aria-hidden="true"><ellipse cx="24" cy="18" rx="14" ry="5"/><path d="M10 18v12c0 3 6 5 14 5s14-2 14-5V18"/><path class="accent" d="M19 17h1M24 16h1M28 18h1"/></svg>
+            <div><b>Benne Wafer Cookies</b><span>Odalie's Sweet Shop</span></div><em>Tin of 24</em>
+          </li>
+          <li class="box-band__item" data-reveal-item>
+            <svg class="line-art" viewBox="0 0 48 48" aria-hidden="true"><path d="M8 12l10-4 12 4 10-4v28l-10 4-12-4-10 4Z"/><path d="M18 8v28M30 12v28"/><path class="accent" d="M12 25c4-4 8 4 12 0s8-6 12-2"/></svg>
+            <div><b>Letterpress Squares Map</b><span>Tidewater Paper Co.</span></div><em>8 × 10 in</em>
+          </li>
+          <li class="box-band__item" data-reveal-item>
+            <svg class="line-art" viewBox="0 0 48 48" aria-hidden="true"><path d="M8 16h32v6a3 3 0 0 0 0 6v6H8v-6a3 3 0 0 0 0-6Z"/><path class="accent" d="M18 22v6M22 20v10M26 23v4M30 21v8"/></svg>
+            <div><b>Squares After Dark Audio Walk</b><span>Hollis Walking Tours</span></div><em>Experience</em>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ============ 5. FEATURED CITIES: tilting postcards ============ -->
+    <section class="section band-paper cities-feature" aria-labelledby="cities-title">
+      <div class="container">
+        <div class="cities-feature__head" data-reveal>
+          <div class="section-head" data-reveal-item>
+            <p class="eyebrow">Featured cities</p>
+            <h2 class="title-m" id="cities-title">Postcards from every stop so far</h2>
+            <p class="lead">Four pilot cities tested the idea in 2026. Savannah and Detroit open our first official season.</p>
+          </div>
+          <a class="link-arrow" href="cities.html" data-reveal-item>See the full map</a>
+        </div>
+
+        <div class="postcard-grid" data-deal>
+          <article class="postcard postcard--savannah" data-tilt>
+            <a class="postcard__link" href="cities.html#savannah">
+              <div class="postcard__art" aria-hidden="true">
+                <svg class="postcard__layer postcard__layer--far" viewBox="0 0 300 200" preserveAspectRatio="xMidYMax slice"><circle class="sun" cx="220" cy="58" r="20"/><path class="far" d="M0 150Q75 132 150 142T300 136V200H0Z"/></svg>
+                <svg class="postcard__layer postcard__layer--near" viewBox="0 0 300 200" preserveAspectRatio="xMidYMax slice"><path class="near" d="M40 152 46 104Q20 104 14 88Q8 66 34 62Q44 40 72 48Q96 34 116 54Q140 56 136 80Q134 100 104 102L58 104 62 152Z"/><path class="near" d="M50 105h2v22h-2zM70 105h2v30h-2zM90 103h2v18h-2zM112 103h2v26h-2zM240 119h2v20h-2zM262 117h2v16h-2z"/><path class="near" d="M232 154 236 120Q214 120 210 106Q208 90 228 88Q238 72 258 78Q280 74 286 92Q292 110 270 116L246 118 250 154Z"/><path class="near" d="M0 160Q150 148 300 160V200H0Z"/></svg>
+              </div>
+              <div class="postcard__stamp" aria-hidden="true"><span>01</span></div>
+              <div class="postcard__text"><span class="postcard__kicker">Box No. 01 · Mar 2027</span><h3 class="postcard__city">Savannah</h3><span class="postcard__state">Georgia</span></div>
+              <div class="postcard__glare"></div>
+            </a>
+          </article>
+
+          <article class="postcard postcard--detroit" data-tilt>
+            <a class="postcard__link" href="cities.html#detroit">
+              <div class="postcard__art" aria-hidden="true">
+                <svg class="postcard__layer postcard__layer--far" viewBox="0 0 300 200" preserveAspectRatio="xMidYMax slice"><circle class="sun" cx="220" cy="58" r="20"/><path class="far" d="M0 200V150H30V128H54V146H86V118H120V140H160V124H200V146H240V130H270V150H300V200Z"/></svg>
+                <svg class="postcard__layer postcard__layer--near" viewBox="0 0 300 200" preserveAspectRatio="xMidYMax slice"><path class="near" d="M0 200V140H24V112H44V128H62V92H72V70H80V92H92V136H112V104H132V120H150V60H158V46H166V60H174V130H196V98H214V118H236V86H254V140H276V120H300V200Z"/></svg>
+              </div>
+              <div class="postcard__stamp" aria-hidden="true"><span>02</span></div>
+              <div class="postcard__text"><span class="postcard__kicker">Box No. 02 · Apr 2027</span><h3 class="postcard__city">Detroit</h3><span class="postcard__state">Michigan</span></div>
+              <div class="postcard__glare"></div>
+            </a>
+          </article>
+
+          <article class="postcard postcard--asheville" data-tilt>
+            <a class="postcard__link" href="cities.html#asheville">
+              <div class="postcard__art" aria-hidden="true">
+                <svg class="postcard__layer postcard__layer--far" viewBox="0 0 300 200" preserveAspectRatio="xMidYMax slice"><circle class="sun" cx="220" cy="58" r="20"/><path class="far" d="M0 118 40 96 80 110 130 78 180 106 230 86 300 112V200H0Z"/></svg>
+                <svg class="postcard__layer postcard__layer--near" viewBox="0 0 300 200" preserveAspectRatio="xMidYMax slice"><path class="near" d="M0 150 50 126 100 144 160 116 220 142 300 124V200H0Z"/><path class="near" d="M196 140V124L208 114 220 124V140Z"/></svg>
+              </div>
+              <div class="postcard__stamp" aria-hidden="true"><span>P1</span></div>
+              <div class="postcard__text"><span class="postcard__kicker">Pilot P1 · Aug 2026</span><h3 class="postcard__city">Asheville</h3><span class="postcard__state">North Carolina</span></div>
+              <div class="postcard__glare"></div>
+            </a>
+          </article>
+
+          <article class="postcard postcard--tucson" data-tilt>
+            <a class="postcard__link" href="cities.html#tucson">
+              <div class="postcard__art" aria-hidden="true">
+                <svg class="postcard__layer postcard__layer--far" viewBox="0 0 300 200" preserveAspectRatio="xMidYMax slice"><circle class="sun" cx="220" cy="58" r="20"/><path class="far" d="M0 128 50 100 90 116 150 82 210 110 260 92 300 108V200H0Z"/></svg>
+                <svg class="postcard__layer postcard__layer--near" viewBox="0 0 300 200" preserveAspectRatio="xMidYMax slice"><path class="near" d="M120 182V96Q120 86 130 86Q140 86 140 96V182Z"/><path class="near" d="M120 148H106Q98 148 98 140V116Q98 108 105 108Q112 108 112 116V136H120Z"/><path class="near" d="M140 130H152V108Q152 100 159 100Q166 100 166 108V134Q166 144 156 144H140Z"/><path class="near" d="M228 182V128Q228 122 234 122Q240 122 240 128V182Z"/><path class="near" d="M240 150H248V138Q248 133 252 133Q256 133 256 138V152Q256 158 250 158H240Z"/><path class="near" d="M0 180Q150 170 300 180V200H0Z"/></svg>
+              </div>
+              <div class="postcard__stamp" aria-hidden="true"><span>P2</span></div>
+              <div class="postcard__text"><span class="postcard__kicker">Pilot P2 · Sep 2026</span><h3 class="postcard__city">Tucson</h3><span class="postcard__state">Arizona</span></div>
+              <div class="postcard__glare"></div>
+            </a>
+          </article>
+
+          <article class="postcard postcard--duluth" data-tilt>
+            <a class="postcard__link" href="cities.html#duluth">
+              <div class="postcard__art" aria-hidden="true">
+                <svg class="postcard__layer postcard__layer--far" viewBox="0 0 300 200" preserveAspectRatio="xMidYMax slice"><circle class="sun" cx="220" cy="58" r="20"/><path class="far" d="M0 120Q60 98 120 112T240 104T300 110V200H0Z"/></svg>
+                <svg class="postcard__layer postcard__layer--near" viewBox="0 0 300 200" preserveAspectRatio="xMidYMax slice"><path class="near" d="M52 162V66H66V162ZM234 162V66H248V162ZM44 58H256V72H44ZM66 128H234V136H66Z"/><path class="near" d="M0 160Q75 154 150 160T300 160V200H0Z"/></svg>
+              </div>
+              <div class="postcard__stamp" aria-hidden="true"><span>P3</span></div>
+              <div class="postcard__text"><span class="postcard__kicker">Pilot P3 · Oct 2026</span><h3 class="postcard__city">Duluth</h3><span class="postcard__state">Minnesota</span></div>
+              <div class="postcard__glare"></div>
+            </a>
+          </article>
+
+          <article class="postcard postcard--santa-fe" data-tilt>
+            <a class="postcard__link" href="cities.html#santa-fe">
+              <div class="postcard__art" aria-hidden="true">
+                <svg class="postcard__layer postcard__layer--far" viewBox="0 0 300 200" preserveAspectRatio="xMidYMax slice"><circle class="sun" cx="220" cy="58" r="20"/><path class="far" d="M0 140H30L44 104H120L132 140H180L194 116H250L262 140H300V200H0Z"/></svg>
+                <svg class="postcard__layer postcard__layer--near" viewBox="0 0 300 200" preserveAspectRatio="xMidYMax slice"><path class="near" fill-rule="evenodd" d="M60 200V128Q60 120 68 120H170Q178 120 178 128V200ZM108 200V162Q119 150 130 162V200Z"/><path class="near" d="M74 120h8v-6h-8zM96 120h8v-6h-8zM118 120h8v-6h-8zM140 120h8v-6h-8zM160 120h8v-6h-8z"/><path class="near" d="M0 186H300V200H0Z"/></svg>
+              </div>
+              <div class="postcard__stamp" aria-hidden="true"><span>P4</span></div>
+              <div class="postcard__text"><span class="postcard__kicker">Pilot P4 · Nov 2026</span><h3 class="postcard__city">Santa Fe</h3><span class="postcard__state">New Mexico</span></div>
+              <div class="postcard__glare"></div>
+            </a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 6. MEET THE MAKERS ============ -->
+    <section class="section band-linen" aria-labelledby="makers-title">
+      <div class="container">
+        <div class="cities-feature__head" data-reveal>
+          <div class="section-head" data-reveal-item>
+            <p class="eyebrow">Meet the makers</p>
+            <h2 class="title-m" id="makers-title">Every product has a person behind it</h2>
+            <p class="lead">We only work with independent, locally owned businesses. Their names and stories stay on everything they make.</p>
+          </div>
+          <a class="link-arrow" href="makers.html" data-reveal-item>Meet all 21 makers</a>
+        </div>
+
+        <div class="maker-cards" data-reveal>
+          <article class="maker-card" data-reveal-item style="--wall: #ead9bb; --awning: #5e7a4f; --trim: #2f4a36; --maker-sky: #f2dcc0">
+            <div class="maker-card__art" aria-hidden="true"><svg viewBox="0 0 320 240"><use href="#storefront"/><text x="160" y="93" text-anchor="middle" fill="#f6efe1" font-family="Bodoni Moda, Georgia, serif" font-size="13" letter-spacing="3">WHITFIELD PANTRY</text></svg></div>
+            <div class="maker-card__body">
+              <p class="maker-card__where">Savannah, Georgia · Box No. 01</p>
+              <h3 class="maker-card__name">Whitfield Pantry</h3>
+              <p class="maker-card__quote">“My grandmother put up peaches every July. Now a jar of hers goes to every state.”</p>
+              <p class="maker-card__product">Mae Whitfield, Peach &amp; Vanilla Bean Preserves</p>
+              <a class="link-arrow" href="makers.html#whitfield-pantry">Read Mae's story</a>
+            </div>
+          </article>
+
+          <article class="maker-card" data-reveal-item style="--wall: #dfe4e2; --awning: #c99a3c; --trim: #3f5a72; --maker-sky: #e3e8e0">
+            <div class="maker-card__art" aria-hidden="true"><svg viewBox="0 0 320 240"><use href="#storefront"/><text x="160" y="93" text-anchor="middle" fill="#f6efe1" font-family="Bodoni Moda, Georgia, serif" font-size="13" letter-spacing="3">FOGGY HOLLOW HONEY</text></svg></div>
+            <div class="maker-card__body">
+              <p class="maker-card__where">Asheville, North Carolina · Pilot P1</p>
+              <h3 class="maker-card__name">Foggy Hollow Honey</h3>
+              <p class="maker-card__quote">“Sourwood trees bloom for about six weeks a year. We bottle every drop by hand.”</p>
+              <p class="maker-card__product">Walt and Ellie Moss, Sourwood Honey</p>
+              <a class="link-arrow" href="makers.html#foggy-hollow-honey">Read their story</a>
+            </div>
+          </article>
+
+          <article class="maker-card" data-reveal-item style="--wall: #e6ddcf; --awning: #2f6f78; --trim: #24545b; --maker-sky: #dcebea">
+            <div class="maker-card__art" aria-hidden="true"><svg viewBox="0 0 320 240"><use href="#storefront"/><text x="160" y="93" text-anchor="middle" fill="#f6efe1" font-family="Bodoni Moda, Georgia, serif" font-size="13" letter-spacing="3">LAKEWALK WILD RICE</text></svg></div>
+            <div class="maker-card__body">
+              <p class="maker-card__where">Duluth, Minnesota · Pilot P3</p>
+              <h3 class="maker-card__name">Lakewalk Wild Rice Co.</h3>
+              <p class="maker-card__quote">“We harvest by canoe, the slow way. Marlowby lets us tell that story to the whole country.”</p>
+              <p class="maker-card__product">Anna Lindqvist, Hand-Harvested Wild Rice</p>
+              <a class="link-arrow" href="makers.html#lakewalk-wild-rice">Read Anna's story</a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 7. MISSION ============ -->
+    <section class="section band-dark mission" aria-labelledby="mission-title">
+      <svg class="mission__seal" viewBox="0 0 40 40" aria-hidden="true" data-parallax="0.3"><circle cx="20" cy="20" r="19.5" fill="none" stroke="#d9bc80" stroke-width="0.3"/><circle cx="20" cy="20" r="17" fill="none" stroke="#d9bc80" stroke-width="0.3" stroke-dasharray="0.6 1.2"/><circle cx="20" cy="20" r="14.5" fill="none" stroke="#d9bc80" stroke-width="0.3"/><path d="M13 26.5V13.5l7 8.5 7-8.5v13" fill="none" stroke="#d9bc80" stroke-width="0.5"/></svg>
+      <div class="container">
+        <div data-reveal>
+          <p class="eyebrow" data-reveal-item>Our mission</p>
+          <h2 class="mission__quote" id="mission-title" data-reveal-item>Every box sends a city's small businesses <em>new customers in all fifty states</em>.</h2>
+        </div>
+        <ul class="mission__list" data-reveal>
+          <li data-reveal-item><b>60%</b><span>of every box price is paid to the makers inside it, at full retail value.</span></li>
+          <li data-reveal-item><b>100%</b><span>of products keep the maker's own name, label, and story. We never repackage.</span></li>
+          <li data-reveal-item><b>1%</b><span>of every box funds a grant for a small business chosen by that month's city.</span></li>
+        </ul>
+        <p class="next-step" style="border-color: var(--line-dark)"><span>Why we started Marlowby, and how we choose each city.</span><a class="link-arrow" href="about.html">Read our story</a></p>
+      </div>
+    </section>
+
+    <!-- ============ 8. PLANS TEASER ============ -->
+    <section class="section band-paper" aria-labelledby="plans-title">
+      <div class="container">
+        <div class="section-head section-head--center" data-reveal>
+          <p class="eyebrow" data-reveal-item>Plans</p>
+          <h2 class="title-m" id="plans-title" data-reveal-item>One box a month, three ways to subscribe</h2>
+          <p class="lead" data-reveal-item>Every plan includes free shipping, the city postcard, and the maker stories. Prepay to save.</p>
+        </div>
+        <div class="plan-teaser" data-reveal>
+          <div class="plan-teaser__card" data-reveal-item>
+            <p class="plan-teaser__name">Monthly</p>
+            <p class="plan-teaser__price"><sup>$</sup>39</p>
+            <p class="plan-teaser__per">per box, billed monthly</p>
+          </div>
+          <div class="plan-teaser__card" data-reveal-item>
+            <p class="plan-teaser__name">3-Month</p>
+            <p class="plan-teaser__price"><sup>$</sup>37</p>
+            <p class="plan-teaser__per">per box, $111 every 3 months</p>
+          </div>
+          <div class="plan-teaser__card plan-teaser__card--best" data-reveal-item>
+            <p class="plan-teaser__flag">Best value · Save $60</p>
+            <p class="plan-teaser__name">12-Month</p>
+            <p class="plan-teaser__price"><sup>$</sup>34</p>
+            <p class="plan-teaser__per">per box, $408 prepaid once</p>
+          </div>
+        </div>
+        <div class="plan-teaser-foot">
+          <a class="btn btn--pine" href="plans.html" data-magnetic><span class="btn__label">Compare plans</span></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 9. FINAL CALL TO ACTION ============ -->
+    <section class="section band-dark final-cta" aria-labelledby="cta-title">
+      <svg class="final-cta__route" viewBox="0 0 1200 400" preserveAspectRatio="none" aria-hidden="true"><path data-draw d="M-20 340 C 180 220, 320 360, 520 250 S 860 60, 1000 160 S 1160 260, 1240 90"/></svg>
+      <div class="container final-cta__inner" data-reveal>
+        <p class="eyebrow" data-reveal-item>Your first stop</p>
+        <h2 class="title-l" id="cta-title" data-reveal-item>Savannah is <em>waiting</em>.</h2>
+        <p class="lead" data-reveal-item>Subscribe by February 15, 2027 to get Box No. 01 in the first shipment.</p>
+        <div class="final-cta__actions" data-reveal-item>
+          <a class="btn" href="subscribe.html" data-magnetic><span class="btn__label">Subscribe now</span></a>
+          <a class="btn btn--ghost" href="plans.html" data-magnetic><span class="btn__label">See the plans</span></a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============ FOOTER (same on every page) ============ -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="site-footer__grid">
+        <div class="site-footer__about">
+          <a class="brand" href="index.html" aria-label="Marlowby home">
+            <svg class="brand__seal" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="19.5" fill="#d9bc80"/><circle cx="20" cy="20" r="17" fill="none" stroke="#163027" stroke-width="1" stroke-dasharray="1 2"/><circle cx="20" cy="20" r="14.5" fill="#163027"/><path d="M13 26.5V13.5l7 8.5 7-8.5v13" fill="none" stroke="#d9bc80" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/></svg>
+            <span class="brand__word">Marlowby</span>
+          </a>
+          <p>Explore your city, one box at a time. A monthly box of local goods and experiences from a different American city.</p>
+        </div>
+        <div>
+          <h2 class="site-footer__heading">Explore</h2>
+          <ul class="site-footer__links">
+            <li><a href="how-it-works.html">How It Works</a></li>
+            <li><a href="box.html">This Month's Box</a></li>
+            <li><a href="cities.html">Cities</a></li>
+            <li><a href="makers.html">Makers</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2 class="site-footer__heading">Subscribe</h2>
+          <ul class="site-footer__links">
+            <li><a href="plans.html">Plans &amp; Pricing</a></li>
+            <li><a href="subscribe.html">Start a Subscription</a></li>
+            <li><a href="plans.html#gift">Give a Gift</a></li>
+            <li><a href="how-it-works.html#faq">FAQ</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2 class="site-footer__heading">Company</h2>
+          <ul class="site-footer__links">
+            <li><a href="about.html">About &amp; Mission</a></li>
+            <li><a href="about.html#makers-promise">Our Maker Promise</a></li>
+            <li><a href="credits.html">Credits &amp; Works Cited</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="site-footer__base">
+        <p>Marlowby and every business and product on this site are fictional, created for the Business Professionals of America Website Design Team event, 2026–27. City names are real. All illustrations and 3D graphics are original.</p>
+        <p class="site-footer__stamp">© 2026 Marlowby · Postmarked USA</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ============ SEARCH (same on every page) ============ -->
+  <dialog class="search" id="search" aria-label="Search Marlowby">
+    <div class="search__bar">
+      <label class="search__label" for="search-input">Search cities, makers, and products</label>
+      <input class="search__input" id="search-input" type="search" placeholder="Search cities, makers, products" autocomplete="off" spellcheck="false">
+      <button class="search__close" type="button">Esc</button>
+    </div>
+    <p class="search__status" aria-live="polite"></p>
+    <ul class="search__results"></ul>
+    <div class="search__hints">
+      <button type="button" data-query="honey">honey</button>
+      <button type="button" data-query="Savannah">Savannah</button>
+      <button type="button" data-query="candle">candle</button>
+      <button type="button" data-query="coffee">coffee</button>
+    </div>
+  </dialog>
+
+  <!-- Libraries (served locally) then our scripts. "defer" runs them after the HTML is parsed. -->
+  <script src="vendor/gsap/gsap.min.js" defer></script>
+  <script src="vendor/gsap/ScrollTrigger.min.js" defer></script>
+  <script src="vendor/lenis/lenis.min.js" defer></script>
+  <script src="js/data.js" defer></script>
+  <script src="js/main.js" defer></script>
+</body>
+</html>
