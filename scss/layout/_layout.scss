@@ -1,0 +1,102 @@
+// =============================================================
+// Layout helpers shared by every page.
+// =============================================================
+@use '../abstracts/mixins' as *;
+
+// Centered content column with side gutters
+.container {
+  width: 100%;
+  max-width: calc(var(--max) + var(--gutter) * 2);
+  margin-inline: auto;
+  padding-inline: max(var(--gutter), env(safe-area-inset-left, 0px)) max(var(--gutter), env(safe-area-inset-right, 0px));
+}
+
+// A full-width section with consistent vertical rhythm
+.section {
+  padding-block: var(--section);
+  position: relative;
+}
+
+// Dark forest band: the "luxury frame" used for hero, pricing highlight, footer
+.band-dark {
+  background: var(--pine-800);
+  color: var(--linen);
+  --text-soft: var(--cream-soft);
+  --accent-text: var(--gold-light);
+}
+
+// Paper (default) sections
+.band-paper {
+  background: var(--paper);
+  --text-soft: var(--ink-soft);
+  --accent-text: var(--gold-ink);
+}
+
+.band-linen {
+  background: var(--linen);
+  --text-soft: var(--ink-soft);
+  --accent-text: var(--gold-ink);
+}
+
+// Section heading block: postal eyebrow, Bodoni title, optional lead
+.section-head {
+  display: grid;
+  gap: var(--space-s);
+  max-width: 44rem;
+  margin-bottom: var(--space-xl);
+
+  &--center { margin-inline: auto; text-align: center; justify-items: center; }
+}
+
+.eyebrow {
+  @include label;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75em;
+  color: var(--accent-text, var(--gold-ink));
+
+  // A small postmark ring before every eyebrow
+  &::before {
+    content: '';
+    width: 0.9em; height: 0.9em;
+    border: 1.5px solid currentColor;
+    border-radius: 50%;
+    box-shadow: inset 0 0 0 2px transparent, inset 0 0 0 3.5px currentColor;
+    opacity: 0.85;
+    flex: none;
+  }
+}
+
+.title-xl { font-size: var(--step-5); font-weight: 400; line-height: 0.98; }
+.title-l { font-size: var(--step-4); font-weight: 400; }
+.title-m { font-size: var(--step-3); font-weight: 400; }
+.title-s { font-size: var(--step-2); font-weight: 500; }
+.title-xl em, .title-l em, .title-m em { font-style: italic; color: var(--accent-text, var(--gold-ink)); }
+
+.lead {
+  font-size: var(--step-1);
+  line-height: 1.5;
+  color: var(--text-soft, var(--ink-soft));
+  max-width: var(--measure);
+}
+
+// Thin double gold rule: the signature divider from the luxury direction
+.rule {
+  border: 0;
+  height: 5px;
+  margin: 0;
+  border-top: 1px solid var(--gold);
+  border-bottom: 1px solid var(--gold);
+  opacity: 0.6;
+}
+
+// "Next step" link that ends every page so no visitor dead-ends
+.next-step {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-m);
+  padding-block: var(--space-l);
+  border-top: 1px solid var(--line);
+}

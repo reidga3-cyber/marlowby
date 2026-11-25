@@ -1,0 +1,37 @@
+{
+  "name": "marlowby",
+  "version": "1.0.0",
+  "description": "Marlowby: Explore Your City, One Box at a Time. BPA 365 Website Design Team, 2026-27.",
+  "scripts": {
+    "vendor": "node scripts/copy-vendor.mjs",
+    "css": "sass scss/main.scss css/main.css --style=compressed --no-source-map",
+    "css:watch": "sass scss/main.scss css/main.css --watch --no-source-map",
+    "js": "esbuild js/src/hero-box.js --bundle --minify --format=iife --target=es2019 --outfile=js/hero-box.min.js",
+    "build": "npm run vendor && npm run css && npm run js",
+    "serve": "node scripts/serve.mjs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/reidga3-cyber/marlowby.git"
+  },
+  "author": "",
+  "license": "UNLICENSED",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/reidga3-cyber/marlowby/issues"
+  },
+  "homepage": "https://github.com/reidga3-cyber/marlowby#readme",
+  "devDependencies": {
+    "esbuild": "^0.24.2",
+    "sass": "^1.108.2"
+  },
+  "dependencies": {
+    "@fontsource-variable/bodoni-moda": "^5.3.0",
+    "@fontsource/dm-mono": "^5.3.0",
+    "@fontsource/instrument-sans": "^5.3.0",
+    "gsap": "^3.13.0",
+    "lenis": "^1.1.20",
+    "three": "^0.170.0"
+  },
+  "private": true
+}
