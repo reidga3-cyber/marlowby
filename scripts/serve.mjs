@@ -6,6 +6,7 @@
 import { createServer } from 'node:http';
 import { readFile, stat } from 'node:fs/promises';
 import { extname, join, normalize } from 'node:path';
+import { gzipSync } from 'node:zlib';
 
 const ROOT = process.cwd();
 const PORT = 8080;
@@ -29,8 +30,14 @@ createServer(async (req, res) => {
     status = 404;
   }
   try {
-    const body = await readFile(file);
-    res.writeHead(status, { 'Content-Type': TYPES[extname(file)] || 'application/octet-stream' });
+    let body = await readFile(file);
+    const headers = { 'Content-Type': TYPES[extname(file)] || 'application/octet-stream', 'Cache-Control': 'max-age=600' };
+    // Compress text files like GitHub Pages does, so local Lighthouse scores match the live site
+    if (/gzip/.test(req.headers['accept-encoding'] || '') && /\.(html|css|js|svg|json|txt)$/.test(file)) {
+      body = gzipSync(body);
+      headers['Content-Encoding'] = 'gzip';
+    }
+    res.writeHead(status, headers);
     res.end(body);
   } catch {
     res.writeHead(404); res.end('Not found');
